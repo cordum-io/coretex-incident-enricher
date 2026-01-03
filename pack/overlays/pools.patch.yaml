@@ -1,0 +1,8 @@
+pools:
+  incident-enricher-default:
+    requires: ["network:egress", "llm", "slack:webhook"]
+
+topics:
+  job.incident-enricher.fetch: incident-enricher-default
+  job.incident-enricher.summarize: incident-enricher-default
+  job.incident-enricher.post: incident-enricher-default

@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  fetcher:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        SERVICE: fetcher
+    env_file:
+      - ./env.example
+    environment:
+      WORKER_ID: incident-enricher-fetcher
+
+  summarizer:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        SERVICE: summarizer
+    env_file:
+      - ./env.example
+    environment:
+      WORKER_ID: incident-enricher-summarizer
+
+  poster:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        SERVICE: poster
+    env_file:
+      - ./env.example
+    environment:
+      WORKER_ID: incident-enricher-poster
+
+  ingester:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        SERVICE: ingester
+    env_file:
+      - ./env.example
+    environment:
+      INGESTER_ADDR: ":8088"
+      INGESTER_WORKFLOW_ID: incident-enricher.enrich
+    ports:
+      - "8088:8088"
