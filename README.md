@@ -8,8 +8,15 @@ This repo ships two things:
 - Simple workers (fetch/summarize/post/ingest) that execute the workflow.
 
 Docs:
-- `docs/overview.md` for the platform pitch and pack concepts.
-- `docs/quickstart.md` for the install + demo flow.
+- [docs/overview.md](docs/overview.md) for the platform pitch and pack concepts.
+- [docs/quickstart.md](docs/quickstart.md) for the install + demo flow.
+
+## Scope
+
+Incident Enricher is a reference pack that proves the full platform loop
+(pack bundle + workers + overlays + policy-gated approvals + artifacts +
+multi-step workflow). It is not the incident->PR autopatcher product yet; it is
+incident enrichment plus a Slack post with an approval gate.
 
 ## Build the pack bundle
 
@@ -48,10 +55,18 @@ Webhook / coretexctl
 
 ## Pack contents
 
-- `pack/pack.yaml` – pack manifest
-- `pack/workflows/incident_enrich.yaml` – workflow template
-- `pack/schemas/*.json` – workflow data contracts
-- `pack/overlays/*.yaml` – pools/timeouts/policy fragments
+- [pack/pack.yaml](pack/pack.yaml) - pack manifest
+- [pack/workflows/incident_enrich.yaml](pack/workflows/incident_enrich.yaml) - workflow template
+- [pack/schemas](pack/schemas) - workflow data contracts
+- [pack/overlays](pack/overlays) - pools/timeouts/policy fragments
+
+## What you get
+
+- Workflow template `incident-enricher.enrich` registered in the workflow store.
+- Schemas for `IncidentInput`, `EvidenceBundle`, `Summary`, and `PostResult`.
+- Config overlays applied to `cfg:system:pools` and `cfg:system:timeouts`.
+- Safety policy fragment that requires approval for `job.incident-enricher.post`.
+- Artifacts for evidence, summary output, and post results (audit trail).
 
 ## Build and run workers
 

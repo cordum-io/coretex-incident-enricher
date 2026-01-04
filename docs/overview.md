@@ -37,3 +37,33 @@ Incident Enricher is a first-pack reference. It proves:
 - Slack posting works via webhook, gated by policy approval.
 
 The goal is to keep the surface area small while proving the platform loop.
+
+## Positioning: reference pack, not product
+
+Incident Enricher is a reference pack that proves the full loop (pack bundle,
+workers, overlays, policy-gated approvals, artifacts, and a multi-step
+workflow). It is not the incident->PR autopatcher product yet; it is incident
+enrichment plus a Slack post with an approval gate.
+
+## Next steps to strengthen the reference pack
+
+- Add a diagram and a screenshot to README (fastest adoption win).
+- Keep README links clickable and keep the "What you get" section accurate.
+- Add CI: go test ./..., golangci-lint, and docker build for each worker.
+- Publish the pack bundle (.tgz from scripts/bundle.sh) as a release artifact.
+
+## Product path (separate repo)
+
+Keep this repo as the reference pack and create a dedicated product pack repo
+(incident -> evidence -> patch -> verify -> PR).
+
+Minimum delta from this pack:
+- Replace the post step with a PR open step (GitHub/GitLab).
+- Add a hard verify gate (tests/lint/templating) before the PR is opened.
+- Require approvals for all write actions (PR open, merge, deploy).
+- Make EvidenceBundle central and redact secrets by default.
+
+## Risk
+
+Do not over-polish the demo pack; it should accelerate onboarding and the
+product pack.
